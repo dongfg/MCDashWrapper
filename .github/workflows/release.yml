@@ -51,18 +51,3 @@ jobs:
           title: Release ${{ steps.get_version.outputs.version }}
           files: |
             ./target/${{ steps.get_artifact_id.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            germannewsmaker/mcdash:latest
-            germannewsmaker/mcdash:${{ steps.get_version.outputs.version }}
